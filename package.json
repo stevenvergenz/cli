@@ -189,6 +189,7 @@
     "lazy-property",
     "libcipm",
     "libnpmhook",
+    "libnpmpublish",
     "libnpx",
     "lockfile",
     "lodash._baseindexof",
