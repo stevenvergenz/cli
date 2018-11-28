@@ -53,7 +53,9 @@ test('createEntryStream full request', t => {
   }, {
     date: 1234 // should never be used.
   })
-  return _createEntryStream(cachePath, 600, {}).then(({
+  return _createEntryStream(cachePath, 600, {
+    registry: common.registry
+  }).then(({
     entryStream: stream,
     latest,
     newEntries
@@ -131,7 +133,9 @@ test('createEntryStream merged stream', function (t) {
     other: { name: 'other', version: '1.0.0' }
   }))
   fixture.create(cachePath)
-  _createEntryStream(cachePath, ALL, {}, 600, function (err, stream, latest, newEntries) {
+  _createEntryStream(cachePath, ALL, {
+    registry: common.registry
+  }, 600, function (err, stream, latest, newEntries) {
     if (err) throw err
     t.equals(latest, now, '`latest` correctly extracted from header')
     t.ok(stream, 'returned a stream')
@@ -166,7 +170,9 @@ test('createEntryStream no sources', function (t) {
   setup()
   const cachePath = path.join(CACHE_DIR, '.cache.json')
   server.get('/-/all').once().reply(404, {})
-  _createEntryStream(cachePath, ALL, {}, 600, function (err, stream, latest, newEntries) {
+  _createEntryStream(cachePath, ALL, {
+    registry: common.registry
+  }, 600, function (err, stream, latest, newEntries) {
     t.ok(err, 'no sources, got an error')
     t.notOk(stream, 'no stream returned')
     t.notOk(latest, 'no latest returned')
